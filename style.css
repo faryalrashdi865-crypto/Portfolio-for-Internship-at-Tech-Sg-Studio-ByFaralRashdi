@@ -1,0 +1,371 @@
+/* =====================================================
+   1. CSS VARIABLES (DESIGN TOKENS)
+   Storing colors/spacing here means you only ever
+   change a value in ONE place to re-theme the whole site.
+===================================================== */
+:root {
+  /* Backgrounds */
+  --bg: #0b1220;          /* page background — deep navy, not pure black */
+  --surface: #121b2e;     /* cards / header background, one shade lighter */
+  --surface-alt: #0f1626; /* code card background, slightly darker than surface */
+
+  /* Text */
+  --text: #e7ecf5;        /* primary text — soft off-white, easier on the eyes than pure white */
+  --text-muted: #8a93a6;  /* secondary text — descriptions, labels */
+
+  /* Accents */
+  --accent: #4cc9c0;      /* cyan — primary accent, used for links/buttons/highlights */
+  --accent-2: #7c5cfc;    /* violet — secondary accent, used sparingly */
+
+  /* Other tokens */
+  --border: #1f2a40;      /* subtle border color for cards */
+  --radius: 14px;         /* shared corner radius */
+  --max-width: 1100px;    /* content width cap so text doesn't stretch too wide */
+}
+
+/* =====================================================
+   2. RESET
+   box-sizing: border-box means padding/border are
+   INCLUDED in an element's width, not added on top —
+   this makes layout math predictable.
+===================================================== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth; /* smooth scroll when nav links jump to a section */
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Inter", system-ui, sans-serif;
+  line-height: 1.6;
+}
+
+h1, h2, h3 {
+  font-family: "Space Grotesk", sans-serif; /* distinct heading font from body text */
+  line-height: 1.15;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img, svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* Visible keyboard focus ring — accessibility, never remove this outright */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+/* Respect users who've asked for reduced motion at the OS level */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* A small reusable helper: caps how wide inner content gets
+   and centers it — used inside header/sections below */
+.wrap {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+
+/* =====================================================
+   3. HEADER + NAV (Flexbox)
+   display:flex + justify-content:space-between pushes the
+   logo to one side and the nav links to the other.
+===================================================== */
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+  max-width: var(--max-width);
+  margin-inline: auto;
+}
+
+.logo {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.logo-dot {
+  color: var(--accent); /* just the dot picks up the accent color */
+}
+
+.main-nav {
+  display: flex;       /* nav links sit in a row */
+  gap: 1.75rem;
+  flex-wrap: wrap;      /* lets links wrap on very small screens instead of overflowing */
+}
+
+.main-nav a {
+  color: var(--text-muted);
+  font-weight: 500;
+  transition: color 0.18s ease;
+}
+
+.main-nav a:hover {
+  color: var(--accent);
+}
+
+/* =====================================================
+   4. HERO / ABOUT SECTION (Flexbox, two columns)
+===================================================== */
+.hero {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding: 3rem 1.5rem 5rem;
+}
+
+.hero-text {
+  flex: 1 1 26rem; /* grow, shrink, but prefer ~26rem — lets it wrap below on small screens */
+}
+
+.eyebrow {
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.hero-text h1 {
+  font-size: clamp(2rem, 4vw, 3rem); /* fluid size: shrinks on mobile, caps on desktop */
+  margin-bottom: 1.25rem;
+}
+
+.hero-lede {
+  color: var(--text-muted);
+  max-width: 34rem;
+  margin-bottom: 2rem;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.75rem 1.4rem;
+  border-radius: 999px; /* fully rounded pill button */
+  font-weight: 600;
+  transition: transform 0.18s ease, background 0.18s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #05201d; /* dark text on the bright accent for contrast */
+}
+
+.btn-ghost {
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+/* --- Decorative code editor card --- */
+.code-card {
+  flex: 1 1 22rem;
+  background: var(--surface-alt);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgb(0 0 0 / 35%);
+}
+
+.code-card-bar {
+  display: flex;
+  gap: 0.4rem;
+  padding: 0.75rem 1rem;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+}
+
+.dot {
+  width: 0.65rem;
+  height: 0.65rem;
+  border-radius: 50%;
+}
+
+.dot-red { background: #ff5f56; }
+.dot-yellow { background: #ffbd2e; }
+.dot-green { background: #27c93f; }
+
+.code-card-body {
+  padding: 1.5rem;
+  font-family: "Courier New", monospace;
+  font-size: 0.9rem;
+  overflow-x: auto; /* if a line is too long, it scrolls instead of breaking the layout */
+}
+
+/* Fake syntax highlighting colors for the code snippet */
+.tok-key  { color: var(--accent-2); }
+.tok-var  { color: #ffd479; }
+.tok-prop { color: #8ecbff; }
+.tok-str  { color: var(--accent); }
+
+/* =====================================================
+   5. SKILLS SECTION (Flexbox row of cards)
+===================================================== */
+.skills {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding: 2rem 1.5rem 5rem;
+}
+
+.skills h2,
+.projects h2 {
+  font-size: 1.75rem;
+  margin-bottom: 2rem;
+}
+
+.skills-row {
+  display: flex;
+  flex-wrap: wrap; /* cards drop to the next line instead of squeezing or overflowing */
+  gap: 1.25rem;
+}
+
+.skill-card {
+  flex: 1 1 15rem; /* each card wants ~15rem but can grow/shrink to fill the row */
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+}
+
+.skill-tag {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+
+.skill-card h3 {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+}
+
+.skill-card p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+/* =====================================================
+   6. PROJECTS SECTION (CSS Grid)
+   auto-fit + minmax lets the grid decide how many
+   columns fit, and reflow automatically as the
+   viewport shrinks — no separate media query needed.
+===================================================== */
+.projects {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding: 2rem 1.5rem 6rem;
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+.project-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.75rem;
+  transition: border-color 0.18s ease;
+}
+
+.project-card:hover {
+  border-color: var(--accent);
+}
+
+.project-card h3 {
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+}
+
+.project-card p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+.project-stack {
+  color: var(--accent) !important; /* override the muted color above for this one line */
+  font-size: 0.8rem !important;
+  font-family: "Courier New", monospace;
+  margin-bottom: 0 !important;
+}
+
+/* =====================================================
+   7. FOOTER (Flexbox row)
+===================================================== */
+.site-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding: 2rem 1.5rem 3rem;
+  border-top: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+.footer-links {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.footer-links a:hover {
+  color: var(--accent);
+}
+
+/* =====================================================
+   8. RESPONSIVE: MOBILE
+   Below 768px, stack the hero into a single column
+   instead of two side-by-side.
+===================================================== */
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;   /* text on top, code card below */
+    align-items: stretch;
+    text-align: left;
+  }
+
+  .site-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+}

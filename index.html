@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Faryal — Web Developer</title>
+
+  <!-- Google Fonts: Space Grotesk for headings, Inter for body text -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Our stylesheet lives in its own file, linked here -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ============================================
+       HEADER + NAV
+       <header> holds the logo/name and site navigation.
+       display:flex is used in the CSS to place the logo
+       on the left and nav links on the right.
+  ============================================ -->
+  <header class="site-header">
+    <a href="#" class="logo">Faryal<span class="logo-dot">.</span></a>
+
+    <nav class="main-nav">
+      <a href="#about">About</a>
+      <a href="#skills">Skills</a>
+      <a href="#projects">Projects</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- ============================================
+         ABOUT / HERO SECTION
+         This is the first thing a visitor sees, so it
+         introduces who you are. The right-hand "code card"
+         is a decorative visual built purely from HTML/CSS
+         (no image file needed) that fits a dev portfolio.
+    ============================================ -->
+    <section id="about" class="hero">
+
+      <div class="hero-text">
+        <p class="eyebrow">Web Development Intern · Tech SG Studio</p>
+        <h1>I build things for the web —<br>and sometimes for other worlds too.</h1>
+        <p class="hero-lede">
+          I'm Faryal, a freelance web developer from Pakistan. I work with
+          React and Next.js on client projects, and I'm currently sharpening
+          my CSS fundamentals — box model, Flexbox, Grid, and responsive
+          design — as part of the Tech SG Studio internship program.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#projects" class="btn btn-primary">See my projects</a>
+          <a href="#contact" class="btn btn-ghost">Get in touch</a>
+        </div>
+      </div>
+
+      <!-- Decorative "code editor" card — pure CSS, no JS -->
+      <div class="code-card" aria-hidden="true">
+        <div class="code-card-bar">
+          <span class="dot dot-red"></span>
+          <span class="dot dot-yellow"></span>
+          <span class="dot dot-green"></span>
+        </div>
+        <pre class="code-card-body"><code><span class="tok-key">const</span> <span class="tok-var">developer</span> = {
+  <span class="tok-prop">name</span>: <span class="tok-str">"Faryal"</span>,
+  <span class="tok-prop">stack</span>: [<span class="tok-str">"React"</span>, <span class="tok-str">"Next.js"</span>, <span class="tok-str">"CSS"</span>],
+  <span class="tok-prop">learning</span>: <span class="tok-str">"Flexbox & Grid"</span>,
+  <span class="tok-prop">status</span>: <span class="tok-str">"open to work"</span>
+};</code></pre>
+      </div>
+    </section>
+
+    <!-- ============================================
+         SKILLS SECTION
+         Built with Flexbox: display:flex + flex-wrap:wrap
+         lets cards reflow onto new lines on small screens
+         without any media query needed here.
+    ============================================ -->
+    <section id="skills" class="skills">
+      <h2>What I work with</h2>
+
+      <div class="skills-row">
+        <div class="skill-card">
+          <span class="skill-tag">Frontend</span>
+          <h3>HTML &amp; CSS</h3>
+          <p>Semantic markup, the box model, Flexbox, Grid, and responsive layouts.</p>
+        </div>
+
+        <div class="skill-card">
+          <span class="skill-tag">Frontend</span>
+          <h3>React &amp; Next.js</h3>
+          <p>Built and shipped real client projects using component-based UI.</p>
+        </div>
+
+        <div class="skill-card">
+          <span class="skill-tag">Growth</span>
+          <h3>SEO &amp; Analytics</h3>
+          <p>Hands-on with GA4, Google Tag Manager, schema markup and Core Web Vitals.</p>
+        </div>
+
+        <div class="skill-card">
+          <span class="skill-tag">Game Dev</span>
+          <h3>Godot &amp; GDScript</h3>
+          <p>Solo-developing an MMORPG, which keeps my problem-solving sharp.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         PROJECTS SECTION
+         Built with CSS Grid: two-dimensional layout,
+         good fit for a gallery of project cards.
+    ============================================ -->
+    <section id="projects" class="projects">
+      <h2>Selected work</h2>
+
+      <div class="projects-grid">
+        <article class="project-card">
+          <h3>Multi-user Blog Platform</h3>
+          <p>
+            A CMS with role-based access control, a rich-text editor and
+            comment threads — designed to run as a web app, mobile web,
+            and eventually a desktop/mobile app.
+          </p>
+          <p class="project-stack">React · Next.js · RBAC</p>
+        </article>
+
+        <article class="project-card">
+          <h3>Realm of Destiny</h3>
+          <p>
+            A Chinese-fantasy MMORPG I'm building solo in Godot 4 using
+            GDScript — from combat systems to world design.
+          </p>
+          <p class="project-stack">Godot 4 · GDScript</p>
+        </article>
+
+        <article class="project-card">
+          <h3>Tech SG Studio — Week 1</h3>
+          <p>
+            This very page: a semantic HTML page styled with hand-written
+            CSS, using Flexbox and Grid without any layout framework.
+          </p>
+          <p class="project-stack">HTML5 · CSS3</p>
+        </article>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================
+       FOOTER
+       Simple flex row: copyright on one side,
+       contact links on the other.
+  ============================================ -->
+  <footer id="contact" class="site-footer">
+    <p>&copy; 2026 Faryal — Built with HTML &amp; CSS for Tech SG Studio Internship</p>
+    <div class="footer-links">
+      <a href="mailto:hello@example.com">Email</a>
+      <a href="#">GitHub</a>
+      <a href="#">LinkedIn</a>
+    </div>
+  </footer>
+
+</body>
+</html>
