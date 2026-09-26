@@ -3,7 +3,7 @@
 A static personal portfolio page built for **Week 1: HTML & CSS Foundations**, part of the Web Development Internship Program at **Tech SG Studio (SMC-Private) Limited**.
 
 **Live site:** faryal-rashdi-portfolio.netlify.app
-**Repository:** [github.com/faryalrashdi865-crypto/portfolio-for-Tech-SG-internship](https://github.com/faryalrashdi865-crypto/portfolio-for-Tech-SG-internship)
+**Repository:** https://github.com/faryalrashdi865-crypto/Portfolio-for-Internship-at-Tech-Sg-Studio-ByFaralRashdi.git
 
 ---
 
