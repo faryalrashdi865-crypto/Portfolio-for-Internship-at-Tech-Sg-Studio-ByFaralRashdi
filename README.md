@@ -1,62 +1,48 @@
-# Week 1 Portfolio — Faryal
+# Faryal — Portfolio
 
-A static personal portfolio page built for **Week 1: HTML & CSS Foundations**, part of the Web Development Internship Program at **Tech SG Studio (SMC-Private) Limited**.
+A multi-page personal portfolio built with plain **HTML and CSS**. No JavaScript, no frameworks.
 
-**Live site:**  https://faryal-intern.netlify.app
-**Repository:** [github.com/faryalrashdi865-crypto/portfolio-for-Tech-SG-internship](https://github.com/faryalrashdi865-crypto/portfolio-for-Tech-SG-internship)
+**Live site:** https://faryal-intern.netlify.app
+**Repository:** https://github.com/faryalrashdi865-crypto/portfolio-for-Tech-SG-internship
 
----
+## Pages
 
-## About the Project
+| File | Purpose |
+|---|---|
+| `index.html` | Home: intro, services, process, featured project |
+| `about.html` | Background and quick facts |
+| `skills.html` | Skills, as reusable cards |
+| `projects.html` | Projects, as reusable cards |
+| `contact.html` | Contact details and a mailto form |
+| `style.css` | One shared stylesheet for every page |
 
-This page is a static personal portfolio built using only **HTML5** and **CSS3** — no JavaScript, no frameworks — as required by the Week 1 brief. It includes a header with navigation, an About Me section, a Skills section built with Flexbox, a Projects section, and a footer.
+## Design decisions
 
-## Requirements Checklist
+**Built to grow.** Skills, services and projects are repeatable card blocks that share the same CSS classes. Adding a new skill or project means copying one block and editing its text. No CSS changes, no layout work.
 
-Based on the Week 1 Weekly Project brief:
+**Design tokens.** Colors, radius and max width live as CSS variables at the top of `style.css`, so re-theming is a handful of edits in one place.
 
-- [x] Static page using HTML & CSS only (no JavaScript)
-- [x] Header with name and navigation (`<header>`, `<nav>`)
-- [x] About section (`<section>`)
-- [x] Skills section **and** Projects section (`<section>`, `<article>`)
-- [x] Footer (`<footer>`)
-- [x] Semantic HTML tags used throughout
-- [x] At least one Flexbox layout (used in the header nav and the Skills grid)
-- [x] Responsive design with a media query at 768px
+**Responsive.** Flexbox and Grid reflow on their own, with breakpoints at 1024px, 768px and 480px.
 
-## Built With
+**Hamburger menu without JavaScript.** A hidden checkbox and a label, styled with the `:checked` sibling selector. It is keyboard accessible: Tab to focus, Space to toggle.
 
-- **HTML5** — semantic structure
-- **CSS3** — custom properties (variables), Flexbox, media queries
-- **BEM naming convention** — class names follow the `block__element` pattern (e.g. `.site-header__logo`, `.skill-card__title`) so every class clearly maps to the section it belongs to
+**Accessibility.** Skip-to-content link, visible focus states, `aria-current` on the active page, a logical heading order, and reduced-motion support.
 
-## Project Structure
+## Adding content
 
-```
-portfolio-for-Tech-SG-internship/
-├── index.html
-├── styles.css
-└── README.md
-```
+- **New skill:** copy a `.skill-card` block in `skills.html` and edit the text.
+- **New project:** copy a `.project-card` block in `projects.html` and edit the text.
+- **New service:** copy a `.service-card` block in `index.html` and edit the text.
+- **New page:** copy an existing page, then add its link to the nav and footer of each page.
 
-## Running Locally
+## Running locally
 
-1. Clone the repository:
-   ```
-   git clone https://github.com/faryalrashdi865-crypto/portfolio-for-Tech-SG-internship.git
-   ```
-2. Open `index.html` in your browser — no build step or server required.
+Open `index.html` in a browser. There is no build step.
 
 ## Deployment
 
-This site is deployed with **Netlify** using manual deploys (Netlify Drop): the project folder is uploaded directly through the Netlify dashboard, which builds and publishes the static site instantly at the live link above.
+Hosted on Netlify as a static site.
 
 ## Author
 
-**Faryal**
-Freelance Web Developer, Pakistan
-Web Development Intern — Tech SG Studio (SMC-Private) Limited
-
----
-
-*Submitted for Week 1 of the Web Development Internship Program.*
+**Faryal** — Freelance Web Developer, Pakistan
