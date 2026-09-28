@@ -4,61 +4,58 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Faryal — Web Developer</title>
+  <meta name="description" content="Faryal — freelance web developer building fast, responsive, maintainable websites with React, Next.js and modern CSS.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%230b1220'/%3E%3Ctext x='16' y='23' font-size='20' font-family='Arial,sans-serif' font-weight='700' text-anchor='middle' fill='%234cc9c0'%3EF%3C/text%3E%3C/svg%3E">
 
-  <!-- Google Fonts: Space Grotesk for headings, Inter for body text -->
+  <!-- Fonts: Space Grotesk for headings, Inter for body text -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
-  <!-- Our stylesheet lives in its own file, linked here -->
+  <!-- One shared stylesheet controls all five pages -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- ============================================
-       HEADER + NAV
-       <header> holds the logo/name and site navigation.
-       display:flex is used in the CSS to place the logo
-       on the left and nav links on the right.
-  ============================================ -->
-  <header class="site-header">
-    <a href="#" class="logo">Faryal<span class="logo-dot">.</span></a>
+  <a href="#main" class="skip-link">Skip to content</a>
 
-    <nav class="main-nav">
-      <a href="#about">About</a>
-      <a href="#skills">Skills</a>
-      <a href="#projects">Projects</a>
-      <a href="#contact">Contact</a>
+  <!-- Header + nav: identical on every page. Only the "active" link changes. -->
+  <header class="site-header">
+    <a href="index.html" class="logo">Faryal<span class="logo-dot">.</span></a>
+
+    <!-- Hamburger (pure CSS, no JavaScript): hidden checkbox + label.
+         Order matters: checkbox, then label, then nav, so the ~ selector
+         in style.css can react to :checked. -->
+    <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation menu">
+    <label for="nav-toggle" class="hamburger"><span></span><span></span><span></span></label>
+
+    <nav class="main-nav" aria-label="Main">
+      <a href="index.html" class="active" aria-current="page">Home</a>
+      <a href="about.html">About</a>
+      <a href="skills.html">Skills</a>
+      <a href="projects.html">Projects</a>
+      <a href="contact.html">Contact</a>
     </nav>
   </header>
 
-  <main>
+  <main id="main">
 
-    <!-- ============================================
-         ABOUT / HERO SECTION
-         This is the first thing a visitor sees, so it
-         introduces who you are. The right-hand "code card"
-         is a decorative visual built purely from HTML/CSS
-         (no image file needed) that fits a dev portfolio.
-    ============================================ -->
-    <section id="about" class="hero">
-
+    <section class="hero">
       <div class="hero-text">
-        <p class="eyebrow">Web Development Intern · Tech SG Studio</p>
+        <p class="eyebrow">Freelance Web Developer · Pakistan</p>
         <h1>I build things for the web —<br>and sometimes for other worlds too.</h1>
         <p class="hero-lede">
-          I'm Faryal, a freelance web developer from Pakistan. I work with
-          React and Next.js on client projects, and I'm currently sharpening
-          my CSS fundamentals — box model, Flexbox, Grid, and responsive
-          design — as part of the Tech SG Studio internship program.
+          I'm Faryal, a freelance web developer. I build responsive sites and
+          web apps with React, Next.js and modern CSS, and I set up the
+          analytics and SEO groundwork that helps them get found.
         </p>
-
         <div class="hero-actions">
-          <a href="#projects" class="btn btn-primary">See my projects</a>
-          <a href="#contact" class="btn btn-ghost">Get in touch</a>
+          <a href="projects.html" class="btn btn-primary">See my projects</a>
+          <a href="contact.html" class="btn btn-ghost">Get in touch</a>
         </div>
       </div>
 
-      <!-- Decorative "code editor" card — pure CSS, no JS -->
+      <!-- Decorative "code editor" card, built from HTML/CSS only -->
       <div class="code-card" aria-hidden="true">
         <div class="code-card-bar">
           <span class="dot dot-red"></span>
@@ -67,101 +64,193 @@
         </div>
         <pre class="code-card-body"><code><span class="tok-key">const</span> <span class="tok-var">developer</span> = {
   <span class="tok-prop">name</span>: <span class="tok-str">"Faryal"</span>,
+  <span class="tok-prop">role</span>: <span class="tok-str">"Web Developer"</span>,
   <span class="tok-prop">stack</span>: [<span class="tok-str">"React"</span>, <span class="tok-str">"Next.js"</span>, <span class="tok-str">"CSS"</span>],
-  <span class="tok-prop">learning</span>: <span class="tok-str">"Flexbox & Grid"</span>,
-  <span class="tok-prop">status</span>: <span class="tok-str">"open to work"</span>
+  <span class="tok-prop">focus</span>: <span class="tok-str">"clean, scalable UI"</span>
 };</code></pre>
       </div>
     </section>
 
-    <!-- ============================================
-         SKILLS SECTION
-         Built with Flexbox: display:flex + flex-wrap:wrap
-         lets cards reflow onto new lines on small screens
-         without any media query needed here.
-    ============================================ -->
-    <section id="skills" class="skills">
-      <h2>What I work with</h2>
-
-      <div class="skills-row">
-        <div class="skill-card">
-          <span class="skill-tag">Frontend</span>
-          <h3>HTML &amp; CSS</h3>
-          <p>Semantic markup, the box model, Flexbox, Grid, and responsive layouts.</p>
+    <!-- SERVICES: what a client can hire me for (different from Skills,
+         which lists what I know). Add a service = copy one .service-card. -->
+    <section class="section">
+      <h2 class="section-title">Services I offer</h2>
+      <div class="card-row">
+        <div class="service-card">
+          <span class="card-icon">WEB</span>
+          <h3 class="card-title">Web Development</h3>
+          <p>Custom sites and web apps built with React, Next.js, or plain HTML and CSS.</p>
         </div>
-
-        <div class="skill-card">
-          <span class="skill-tag">Frontend</span>
-          <h3>React &amp; Next.js</h3>
-          <p>Built and shipped real client projects using component-based UI.</p>
+        <div class="service-card">
+          <span class="card-icon">SEO</span>
+          <h3 class="card-title">SEO &amp; Analytics Setup</h3>
+          <p>GA4, Google Tag Manager, schema markup, and Core Web Vitals tuning.</p>
         </div>
-
-        <div class="skill-card">
-          <span class="skill-tag">Growth</span>
-          <h3>SEO &amp; Analytics</h3>
-          <p>Hands-on with GA4, Google Tag Manager, schema markup and Core Web Vitals.</p>
-        </div>
-
-        <div class="skill-card">
-          <span class="skill-tag">Game Dev</span>
-          <h3>Godot &amp; GDScript</h3>
-          <p>Solo-developing an MMORPG, which keeps my problem-solving sharp.</p>
+        <div class="service-card">
+          <span class="card-icon">UI</span>
+          <h3 class="card-title">UI &amp; Layout</h3>
+          <p>Responsive, accessible interfaces designed to hold up as content grows.</p>
         </div>
       </div>
     </section>
 
-    <!-- ============================================
-         PROJECTS SECTION
-         Built with CSS Grid: two-dimensional layout,
-         good fit for a gallery of project cards.
-    ============================================ -->
-    <section id="projects" class="projects">
-      <h2>Selected work</h2>
-
-      <div class="projects-grid">
-        <article class="project-card">
-          <h3>Multi-user Blog Platform</h3>
-          <p>
-            A CMS with role-based access control, a rich-text editor and
-            comment threads — designed to run as a web app, mobile web,
-            and eventually a desktop/mobile app.
-          </p>
-          <p class="project-stack">React · Next.js · RBAC</p>
-        </article>
-
-        <article class="project-card">
-          <h3>Realm of Destiny</h3>
-          <p>
-            A Chinese-fantasy MMORPG I'm building solo in Godot 4 using
-            GDScript — from combat systems to world design.
-          </p>
-          <p class="project-stack">Godot 4 · GDScript</p>
-        </article>
-
-        <article class="project-card">
-          <h3>Tech SG Studio — Week 1</h3>
-          <p>
-            This very page: a semantic HTML page styled with hand-written
-            CSS, using Flexbox and Grid without any layout framework.
-          </p>
-          <p class="project-stack">HTML5 · CSS3</p>
-        </article>
+    <!-- EXPLORE: short links into the other pages -->
+    <section class="section">
+      <h2 class="section-title">Explore the site</h2>
+      <div class="card-row">
+        <a class="teaser-card" href="about.html">
+          <h3 class="card-title">About me</h3>
+          <p>Background, current focus, and how I work.</p>
+        </a>
+        <a class="teaser-card" href="skills.html">
+          <h3 class="card-title">Skills</h3>
+          <p>Frontend, growth tooling, and game development.</p>
+        </a>
+        <a class="teaser-card" href="projects.html">
+          <h3 class="card-title">Projects</h3>
+          <p>A CMS platform, a solo game project, and this site.</p>
+        </a>
       </div>
     </section>
 
+    <!-- WHY WORK WITH ME -->
+    <section class="section">
+      <h2 class="section-title">Why work with me</h2>
+      <div class="card-row">
+        <div class="value-card">
+          <span class="card-icon">01</span>
+          <h3 class="card-title">Built to be extended</h3>
+          <p>Reusable components and shared styles, so new pages, skills or products are added without a rebuild.</p>
+        </div>
+        <div class="value-card">
+          <span class="card-icon">02</span>
+          <h3 class="card-title">Measurable from day one</h3>
+          <p>Analytics and SEO groundwork is set up alongside the build, not bolted on afterwards.</p>
+        </div>
+        <div class="value-card">
+          <span class="card-icon">03</span>
+          <h3 class="card-title">Works on every screen</h3>
+          <p>Mobile-first layouts that adapt cleanly from phone to tablet to desktop.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="section">
+      <h2 class="section-title">How a project usually runs</h2>
+      <div class="process-row">
+        <div class="process-step">
+          <span class="step-num">Step 1</span>
+          <h3>Discover</h3>
+          <p>Understand the goal, audience, and must-have features.</p>
+        </div>
+        <div class="process-step">
+          <span class="step-num">Step 2</span>
+          <h3>Design</h3>
+          <p>Layout, color, and typography decisions, made intentionally.</p>
+        </div>
+        <div class="process-step">
+          <span class="step-num">Step 3</span>
+          <h3>Build</h3>
+          <p>Clean, semantic HTML and CSS, or React, depending on the project.</p>
+        </div>
+        <div class="process-step">
+          <span class="step-num">Step 4</span>
+          <h3>Deliver</h3>
+          <p>Tested across screen sizes, deployed, and handed off.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FEATURED PROJECT: one project shown larger -->
+    <section class="section">
+      <div class="panel panel--split">
+        <div class="panel-text">
+          <p class="eyebrow">Featured project</p>
+          <h2>Realm of Destiny</h2>
+          <p>
+            A Chinese-fantasy MMORPG I'm building solo in Godot 4 with
+            GDScript. It keeps my systems-thinking sharp outside of client
+            web work.
+          </p>
+          <a href="projects.html" class="btn btn-ghost">View all projects</a>
+        </div>
+        <div class="code-card" aria-hidden="true">
+          <div class="code-card-bar">
+            <span class="dot dot-red"></span>
+            <span class="dot dot-yellow"></span>
+            <span class="dot dot-green"></span>
+          </div>
+          <pre class="code-card-body"><code><span class="tok-key">const</span> <span class="tok-var">project</span> = {
+  <span class="tok-prop">name</span>: <span class="tok-str">"Realm of Destiny"</span>,
+  <span class="tok-prop">engine</span>: <span class="tok-str">"Godot 4"</span>,
+  <span class="tok-prop">language</span>: <span class="tok-str">"GDScript"</span>,
+  <span class="tok-prop">mode</span>: <span class="tok-str">"solo project"</span>
+};</code></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- CLOSING CALL TO ACTION -->
+    <section class="section">
+      <div class="panel panel--cta">
+        <div>
+          <h2>Have a project in mind?</h2>
+          <p>Send me a message and let's talk it through.</p>
+        </div>
+        <a href="contact.html" class="btn btn-primary">Get in touch</a>
+      </div>
+    </section>
   </main>
 
-  <!-- ============================================
-       FOOTER
-       Simple flex row: copyright on one side,
-       contact links on the other.
-  ============================================ -->
-  <footer id="contact" class="site-footer">
-    <p>&copy; 2026 Faryal — Built with HTML &amp; CSS for Tech SG Studio Internship</p>
-    <div class="footer-links">
-      <a href="mailto:hello@example.com">Email</a>
-      <a href="#">GitHub</a>
-      <a href="#">LinkedIn</a>
+  <footer class="site-footer">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <a href="index.html" class="logo">Faryal<span class="logo-dot">.</span></a>
+        <p>Freelance web developer building clean, responsive and maintainable websites.</p>
+
+        <!-- Inline SVG icons: no icon-font or CDN needed -->
+        <div class="social-icons">
+          <a href="mailto:faryalrashdi865@gmail.com" aria-label="Email">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18v12H3z"/><path d="M3 7l9 6 9-6"/></svg>
+          </a>
+          <a href="https://github.com/faryalrashdi865-crypto" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.58 2 12.25c0 4.53 2.87 8.37 6.84 9.73.5.1.68-.22.68-.49 0-.24-.01-.88-.01-1.72-2.78.62-3.37-1.37-3.37-1.37-.45-1.18-1.11-1.49-1.11-1.49-.91-.64.07-.63.07-.63 1 .07 1.53 1.05 1.53 1.05.9 1.57 2.34 1.12 2.91.86.09-.67.35-1.12.64-1.38-2.22-.26-4.56-1.14-4.56-5.06 0-1.12.39-2.03 1.03-2.75-.1-.26-.45-1.32.1-2.75 0 0 .84-.28 2.75 1.05a9.3 9.3 0 0 1 5 0c1.91-1.33 2.75-1.05 2.75-1.05.55 1.43.2 2.49.1 2.75.64.72 1.03 1.63 1.03 2.75 0 3.93-2.34 4.79-4.57 5.05.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.81 0 .27.18.6.69.49A10.26 10.26 0 0 0 22 12.25C22 6.58 17.52 2 12 2z"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/faryal-rashdi-362057332/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5C4.98 4.88 3.87 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.24 8.24H4.7V23H.24V8.24zM8.34 8.24h4.27v2.01h.06c.6-1.13 2.06-2.32 4.24-2.32 4.53 0 5.37 2.98 5.37 6.86V23h-4.46v-6.98c0-1.66-.03-3.8-2.31-3.8-2.32 0-2.67 1.81-2.67 3.68V23H8.34V8.24z"/></svg>
+          </a>
+          <a href="https://x.com/FaryalRash32097" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.9 2H22l-7.4 8.46L23.3 22H16.9l-5-6.55L6.1 22H3l7.9-9.03L2.9 2h6.6l4.5 5.98L18.9 2zm-1.1 18h1.7L7.3 3.9H5.5L17.8 20z"/></svg>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-col">
+        <h2 class="footer-heading">Site</h2>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="about.html">About</a></li>
+          <li><a href="skills.html">Skills</a></li>
+          <li><a href="projects.html">Projects</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h2 class="footer-heading">Connect</h2>
+        <ul>
+          <li><a href="mailto:faryalrashdi865@gmail.com">Email</a></li>
+          <li><a href="https://github.com/faryalrashdi865-crypto" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+          <li><a href="https://www.linkedin.com/in/faryal-rashdi-362057332/" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+          <li><a href="https://x.com/FaryalRash32097" target="_blank" rel="noopener noreferrer">X (Twitter)</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2026 Faryal. All rights reserved.</p>
+      <p>Designed and built with HTML &amp; CSS.</p>
     </div>
   </footer>
 
