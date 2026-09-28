@@ -1,133 +1,168 @@
 /* =====================================================
-   1. CSS VARIABLES (DESIGN TOKENS)
-   Storing colors/spacing here means you only ever
-   change a value in ONE place to re-theme the whole site.
+   1. DESIGN TOKENS
+   Single source of truth for color/spacing — every page
+   and component references these variables. Rebranding
+   later means editing values here, nowhere else.
 ===================================================== */
 :root {
-  /* Backgrounds */
-  --bg: #0b1220;          /* page background — deep navy, not pure black */
-  --surface: #121b2e;     /* cards / header background, one shade lighter */
-  --surface-alt: #0f1626; /* code card background, slightly darker than surface */
-
-  /* Text */
-  --text: #e7ecf5;        /* primary text — soft off-white, easier on the eyes than pure white */
-  --text-muted: #8a93a6;  /* secondary text — descriptions, labels */
-
-  /* Accents */
-  --accent: #4cc9c0;      /* cyan — primary accent, used for links/buttons/highlights */
-  --accent-2: #7c5cfc;    /* violet — secondary accent, used sparingly */
-
-  /* Other tokens */
-  --border: #1f2a40;      /* subtle border color for cards */
-  --radius: 14px;         /* shared corner radius */
-  --max-width: 1100px;    /* content width cap so text doesn't stretch too wide */
+  --bg: #0b1220;
+  --surface: #121b2e;
+  --surface-alt: #0f1626;
+  --text: #e7ecf5;
+  --text-muted: #8a93a6;
+  --accent: #4cc9c0;
+  --accent-2: #7c5cfc;
+  --border: #1f2a40;
+  --radius: 14px;
+  --max-width: 1100px;
 }
 
 /* =====================================================
-   2. RESET
-   box-sizing: border-box means padding/border are
-   INCLUDED in an element's width, not added on top —
-   this makes layout math predictable.
+   2. RESET + BASE
 ===================================================== */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html {
-  scroll-behavior: smooth; /* smooth scroll when nav links jump to a section */
-}
-
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 body {
   background: var(--bg);
   color: var(--text);
   font-family: "Inter", system-ui, sans-serif;
   line-height: 1.6;
 }
+h1, h2, h3 { font-family: "Space Grotesk", sans-serif; line-height: 1.15; }
+a { color: inherit; text-decoration: none; }
+img, svg { display: block; max-width: 100%; }
+ul { list-style: none; }
 
-h1, h2, h3 {
-  font-family: "Space Grotesk", sans-serif; /* distinct heading font from body text */
-  line-height: 1.15;
-}
+/* Visible keyboard focus everywhere — never remove this */
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-img, svg {
-  display: block;
-  max-width: 100%;
-}
-
-/* Visible keyboard focus ring — accessibility, never remove this outright */
-:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-}
-
-/* Respect users who've asked for reduced motion at the OS level */
 @media (prefers-reduced-motion: reduce) {
-  * {
-    transition: none !important;
-    scroll-behavior: auto !important;
-  }
+  * { transition: none !important; scroll-behavior: auto !important; }
 }
 
-/* A small reusable helper: caps how wide inner content gets
-   and centers it — used inside header/sections below */
-.wrap {
-  max-width: var(--max-width);
-  margin-inline: auto;
-  padding-inline: 1.5rem;
+/* Skip link: invisible until a keyboard user tabs to it */
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: 0;
+}
+.skip-link:focus {
+  left: 1rem;
+  top: 1rem;
+  z-index: 100;
+  background: var(--accent);
+  color: #05201d;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
 }
 
 /* =====================================================
-   3. HEADER + NAV (Flexbox)
-   display:flex + justify-content:space-between pushes the
-   logo to one side and the nav links to the other.
+   3. LAYOUT HELPERS (reused by every page)
+   .section  = centered, width-capped content block
+   .section-title = the heading that opens a section
+===================================================== */
+.section {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding: 0 1.5rem 5rem;
+}
+.section-title { font-size: 1.6rem; margin-bottom: 2rem; }
+
+.eyebrow {
+  color: var(--accent);
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 0.75rem;
+}
+
+/* =====================================================
+   4. HEADER + NAV
+   The same markup is repeated on every page; because the
+   CSS lives here once, a style change updates all pages.
 ===================================================== */
 .site-header {
+  position: relative; /* anchors the hidden menu checkbox on mobile */
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 1.25rem 1.5rem;
   max-width: var(--max-width);
   margin-inline: auto;
+  padding: 1.25rem 1.5rem;
 }
 
-.logo {
-  font-family: "Space Grotesk", sans-serif;
-  font-size: 1.25rem;
-  font-weight: 700;
-}
+.logo { font-family: "Space Grotesk", sans-serif; font-size: 1.25rem; font-weight: 700; }
+.logo-dot { color: var(--accent); }
 
-.logo-dot {
-  color: var(--accent); /* just the dot picks up the accent color */
-}
-
-.main-nav {
-  display: flex;       /* nav links sit in a row */
-  gap: 1.75rem;
-  flex-wrap: wrap;      /* lets links wrap on very small screens instead of overflowing */
-}
-
+.main-nav { display: flex; gap: 1.75rem; flex-wrap: wrap; }
 .main-nav a {
   color: var(--text-muted);
   font-weight: 500;
-  transition: color 0.18s ease;
+  padding-bottom: 0.25rem;
+  border-bottom: 2px solid transparent;
+  transition: color 0.18s ease, border-color 0.18s ease;
 }
+.main-nav a:hover { color: var(--text); }
 
-.main-nav a:hover {
+/* Current page: the "active" class is set by hand on each page,
+   so no JavaScript is needed to highlight it. */
+.main-nav a.active {
   color: var(--accent);
+  border-bottom-color: var(--accent);
 }
 
 /* =====================================================
-   4. HERO / ABOUT SECTION (Flexbox, two columns)
+   5. HAMBURGER MENU — pure CSS, no JavaScript
+   A checkbox + a <label>: clicking the label toggles the
+   checkbox natively, and CSS reacts to :checked using the
+   ~ sibling selector. Markup order must be:
+   checkbox, label, nav.
+   The checkbox is hidden on desktop and only becomes
+   (invisibly) focusable on mobile, so keyboard users can
+   Tab to it and press Space to open the menu.
+===================================================== */
+.nav-toggle { display: none; }
+
+.hamburger {
+  display: none; /* shown only in the mobile media query */
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 26px;
+  height: 20px;
+  cursor: pointer;
+}
+.hamburger span {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background: var(--text);
+  border-radius: 2px;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+/* Three lines morph into an X when the menu is open */
+.nav-toggle:checked ~ .hamburger span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-toggle:checked ~ .hamburger span:nth-child(2) { opacity: 0; }
+.nav-toggle:checked ~ .hamburger span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+/* Show the focus ring on the icon when the checkbox has keyboard focus */
+.nav-toggle:focus-visible ~ .hamburger { outline: 2px solid var(--accent); outline-offset: 6px; border-radius: 4px; }
+
+/* =====================================================
+   6. INNER-PAGE INTRO BAND
+   Every inner page opens with one, so separate files
+   still feel like one site.
+===================================================== */
+.page-hero {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding: 2.5rem 1.5rem 2rem;
+}
+.page-hero h1 { font-size: clamp(1.9rem, 4vw, 2.75rem); margin-bottom: 0.75rem; }
+.page-hero p:not(.eyebrow) { color: var(--text-muted); max-width: 40rem; }
+
+/* =====================================================
+   7. HOME HERO
 ===================================================== */
 .hero {
   display: flex;
@@ -135,61 +170,26 @@ img, svg {
   gap: 3rem;
   max-width: var(--max-width);
   margin-inline: auto;
-  padding: 3rem 1.5rem 5rem;
+  padding: 2rem 1.5rem 5rem;
 }
-
-.hero-text {
-  flex: 1 1 26rem; /* grow, shrink, but prefer ~26rem — lets it wrap below on small screens */
-}
-
-.eyebrow {
-  color: var(--accent);
-  font-weight: 600;
-  font-size: 0.9rem;
-  margin-bottom: 1rem;
-}
-
-.hero-text h1 {
-  font-size: clamp(2rem, 4vw, 3rem); /* fluid size: shrinks on mobile, caps on desktop */
-  margin-bottom: 1.25rem;
-}
-
-.hero-lede {
-  color: var(--text-muted);
-  max-width: 34rem;
-  margin-bottom: 2rem;
-}
-
-.hero-actions {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
+.hero-text { flex: 1 1 26rem; }
+.hero-text h1 { font-size: clamp(2rem, 4vw, 3rem); margin-bottom: 1.25rem; }
+.hero-lede { color: var(--text-muted); max-width: 34rem; margin-bottom: 2rem; }
+.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
 
 .btn {
   display: inline-flex;
   align-items: center;
   padding: 0.75rem 1.4rem;
-  border-radius: 999px; /* fully rounded pill button */
+  border-radius: 999px;
   font-weight: 600;
-  transition: transform 0.18s ease, background 0.18s ease;
+  transition: transform 0.18s ease;
 }
+.btn:hover { transform: translateY(-2px); }
+.btn-primary { background: var(--accent); color: #05201d; }
+.btn-ghost { border: 1px solid var(--border); color: var(--text); }
 
-.btn:hover {
-  transform: translateY(-2px);
-}
-
-.btn-primary {
-  background: var(--accent);
-  color: #05201d; /* dark text on the bright accent for contrast */
-}
-
-.btn-ghost {
-  border: 1px solid var(--border);
-  color: var(--text);
-}
-
-/* --- Decorative code editor card --- */
+/* Decorative "code editor" card (hidden from screen readers) */
 .code-card {
   flex: 1 1 22rem;
   background: var(--surface-alt);
@@ -198,103 +198,69 @@ img, svg {
   overflow: hidden;
   box-shadow: 0 20px 60px rgb(0 0 0 / 35%);
 }
-
-.code-card-bar {
-  display: flex;
-  gap: 0.4rem;
-  padding: 0.75rem 1rem;
-  background: var(--surface);
-  border-bottom: 1px solid var(--border);
-}
-
-.dot {
-  width: 0.65rem;
-  height: 0.65rem;
-  border-radius: 50%;
-}
-
+.code-card-bar { display: flex; gap: 0.4rem; padding: 0.75rem 1rem; background: var(--surface); border-bottom: 1px solid var(--border); }
+.dot { width: 0.65rem; height: 0.65rem; border-radius: 50%; }
 .dot-red { background: #ff5f56; }
 .dot-yellow { background: #ffbd2e; }
 .dot-green { background: #27c93f; }
-
-.code-card-body {
-  padding: 1.5rem;
-  font-family: "Courier New", monospace;
-  font-size: 0.9rem;
-  overflow-x: auto; /* if a line is too long, it scrolls instead of breaking the layout */
-}
-
-/* Fake syntax highlighting colors for the code snippet */
-.tok-key  { color: var(--accent-2); }
-.tok-var  { color: #ffd479; }
+.code-card-body { padding: 1.5rem; font-family: "Courier New", monospace; font-size: 0.9rem; overflow-x: auto; }
+.tok-key { color: var(--accent-2); }
+.tok-var { color: #ffd479; }
 .tok-prop { color: #8ecbff; }
-.tok-str  { color: var(--accent); }
+.tok-str { color: var(--accent); }
 
 /* =====================================================
-   5. SKILLS SECTION (Flexbox row of cards)
+   8. CARD COMPONENTS
+   One shared card look, several semantic names. To add a
+   skill / service / reason later: copy one card block in
+   the HTML and edit the text. The flex-wrap row reflows
+   on its own, so no CSS changes are ever needed.
 ===================================================== */
-.skills {
-  max-width: var(--max-width);
-  margin-inline: auto;
-  padding: 2rem 1.5rem 5rem;
-}
+.card-row { display: flex; flex-wrap: wrap; gap: 1.25rem; }
 
-.skills h2,
-.projects h2 {
-  font-size: 1.75rem;
-  margin-bottom: 2rem;
-}
-
-.skills-row {
-  display: flex;
-  flex-wrap: wrap; /* cards drop to the next line instead of squeezing or overflowing */
-  gap: 1.25rem;
-}
-
-.skill-card {
-  flex: 1 1 15rem; /* each card wants ~15rem but can grow/shrink to fill the row */
+.teaser-card,
+.value-card,
+.skill-card,
+.service-card {
+  flex: 1 1 15rem;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 1.5rem;
 }
+.teaser-card { display: block; transition: border-color 0.18s ease; }
+.teaser-card:hover { border-color: var(--accent); }
 
-.skill-tag {
-  display: inline-block;
-  font-size: 0.75rem;
-  font-weight: 600;
+.card-title { font-size: 1.1rem; margin-bottom: 0.5rem; }
+.teaser-card p,
+.value-card p,
+.skill-card p,
+.service-card p { color: var(--text-muted); font-size: 0.95rem; }
+
+.card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.5rem;
+  height: 2.5rem;
+  padding-inline: 0.5rem;
+  border-radius: 0.6rem;
+  background: rgb(76 201 192 / 12%);
   color: var(--accent);
-  margin-bottom: 0.75rem;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  margin-bottom: 1rem;
 }
+.skill-tag { display: inline-block; font-size: 0.75rem; font-weight: 600; color: var(--accent); margin-bottom: 0.75rem; }
 
-.skill-card h3 {
-  font-size: 1.1rem;
-  margin-bottom: 0.5rem;
-}
-
-.skill-card p {
-  color: var(--text-muted);
-  font-size: 0.95rem;
-}
-
-/* =====================================================
-   6. PROJECTS SECTION (CSS Grid)
-   auto-fit + minmax lets the grid decide how many
-   columns fit, and reflow automatically as the
-   viewport shrinks — no separate media query needed.
-===================================================== */
-.projects {
-  max-width: var(--max-width);
-  margin-inline: auto;
-  padding: 2rem 1.5rem 6rem;
-}
-
+/* Project cards: CSS Grid with auto-fit + minmax, so the grid
+   works out its own column count as projects are added. */
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 1.5rem;
 }
-
 .project-card {
   background: var(--surface);
   border: 1px solid var(--border);
@@ -302,70 +268,237 @@ img, svg {
   padding: 1.75rem;
   transition: border-color 0.18s ease;
 }
-
-.project-card:hover {
-  border-color: var(--accent);
-}
-
-.project-card h3 {
-  font-size: 1.2rem;
-  margin-bottom: 0.75rem;
-}
-
-.project-card p {
-  color: var(--text-muted);
-  font-size: 0.95rem;
-  margin-bottom: 1rem;
-}
-
-.project-stack {
-  color: var(--accent) !important; /* override the muted color above for this one line */
-  font-size: 0.8rem !important;
+.project-card:hover { border-color: var(--accent); }
+.project-card .card-title { font-size: 1.2rem; margin-bottom: 0.75rem; }
+.project-card p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1rem; }
+.project-card .project-stack {
+  color: var(--accent);
+  font-size: 0.8rem;
   font-family: "Courier New", monospace;
-  margin-bottom: 0 !important;
+  margin-bottom: 0;
 }
 
 /* =====================================================
-   7. FOOTER (Flexbox row)
+   9. HOME: PROCESS STEPS + PANELS
 ===================================================== */
-.site-footer {
+.process-row { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+.process-step { flex: 1 1 12rem; border-top: 2px solid var(--accent); padding-top: 1rem; }
+.step-num {
+  font-family: "Space Grotesk", sans-serif;
+  color: var(--accent);
+  font-weight: 700;
+  font-size: 0.85rem;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+.process-step h3 { font-size: 1rem; margin-bottom: 0.4rem; }
+.process-step p { color: var(--text-muted); font-size: 0.9rem; }
+
+/* .panel = a highlighted band. Two variants:
+   --split (text + visual side by side) and --cta (text + button) */
+.panel {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
   flex-wrap: wrap;
-  gap: 1rem;
+  align-items: center;
+  gap: 1.5rem;
+  background: linear-gradient(135deg, var(--surface), var(--surface-alt));
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2.5rem;
+}
+.panel--split { justify-content: flex-start; gap: 2rem; }
+.panel--cta { justify-content: space-between; }
+.panel h2 { font-size: 1.4rem; margin-bottom: 0.4rem; }
+.panel p { color: var(--text-muted); }
+.panel .eyebrow { color: var(--accent); margin-bottom: 0.5rem; }
+.panel-text { flex: 1 1 20rem; }
+.panel-text p:not(.eyebrow) { margin-top: 0.5rem; }
+.panel-text .btn { margin-top: 1.25rem; }
+.panel .code-card { flex: 1 1 18rem; }
+
+/* =====================================================
+   10. ABOUT PAGE
+===================================================== */
+.about-content {
   max-width: var(--max-width);
   margin-inline: auto;
-  padding: 2rem 1.5rem 3rem;
+  padding: 1rem 1.5rem 5rem;
+  display: flex;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+.about-body { flex: 2 1 26rem; color: var(--text-muted); }
+.about-body p { margin-bottom: 1.25rem; }
+.about-facts {
+  flex: 1 1 16rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  align-self: flex-start;
+}
+.about-facts h2 { font-size: 1.05rem; margin-bottom: 1rem; }
+.about-facts li { color: var(--text-muted); font-size: 0.95rem; padding: 0.4rem 0; border-bottom: 1px solid var(--border); }
+.about-facts li:last-child { border-bottom: none; }
+.about-facts li strong { color: var(--text); display: block; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 0.15rem; }
+
+/* =====================================================
+   11. CONTACT PAGE
+===================================================== */
+.contact-layout {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding: 1rem 1.5rem 6rem;
+  display: flex;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+.contact-links { flex: 1 1 16rem; display: flex; flex-direction: column; gap: 1rem; }
+.contact-link {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.4rem;
+  overflow-wrap: anywhere;
+  transition: border-color 0.18s ease;
+}
+.contact-link:hover { border-color: var(--accent); }
+.contact-link strong { display: block; font-size: 0.8rem; color: var(--accent); text-transform: uppercase; letter-spacing: 0.03em; margin-bottom: 0.25rem; }
+
+.contact-form { flex: 2 1 22rem; display: flex; flex-direction: column; gap: 1rem; }
+.contact-form label { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 0.35rem; display: block; }
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 0.75rem 0.9rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 0.6rem;
+  color: var(--text);
+  font: inherit;
+}
+.contact-form input:focus-visible,
+.contact-form textarea:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-color: var(--accent); }
+.contact-form textarea { resize: vertical; min-height: 8rem; }
+.contact-form .btn { align-self: flex-start; border: 0; cursor: pointer; font: inherit; font-weight: 600; }
+.contact-note { font-size: 0.85rem; color: var(--text-muted); }
+
+/* =====================================================
+   12. FOOTER — brand + sitemap + connect, then a bottom bar
+===================================================== */
+.site-footer {
+  max-width: var(--max-width);
+  margin-inline: auto;
+  padding: 3.5rem 1.5rem 0;
   border-top: 1px solid var(--border);
   color: var(--text-muted);
   font-size: 0.9rem;
 }
+.footer-top { display: flex; flex-wrap: wrap; gap: 3rem; padding-bottom: 2.5rem; }
+.footer-brand { flex: 2 1 18rem; }
+.footer-brand .logo { font-size: 1.15rem; }
+.footer-brand p { margin-top: 0.85rem; max-width: 24rem; }
 
-.footer-links {
-  display: flex;
-  gap: 1.5rem;
+.social-icons { display: flex; gap: 0.75rem; margin-top: 1.25rem; }
+.social-icons a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  transition: color 0.18s ease, border-color 0.18s ease;
 }
+.social-icons a:hover { color: var(--accent); border-color: var(--accent); }
+.social-icons svg { width: 1rem; height: 1rem; }
 
-.footer-links a:hover {
-  color: var(--accent);
+.footer-col { flex: 1 1 10rem; }
+.footer-heading {
+  font-family: "Space Grotesk", sans-serif;
+  color: var(--text);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 1rem;
+}
+.footer-col ul { display: flex; flex-direction: column; gap: 0.65rem; }
+.footer-col a:hover,
+.footer-brand .logo:hover { color: var(--accent); }
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 1.5rem 0 2rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.82rem;
 }
 
 /* =====================================================
-   8. RESPONSIVE: MOBILE
-   Below 768px, stack the hero into a single column
-   instead of two side-by-side.
+   13. RESPONSIVE: TABLET (≤1024px)
+===================================================== */
+@media (max-width: 1024px) {
+  .hero { gap: 2rem; padding-bottom: 4rem; }
+  .panel { padding: 2rem; }
+}
+
+/* =====================================================
+   14. RESPONSIVE: MOBILE (≤768px)
+   Stacks layouts and turns the nav into the hamburger
+   dropdown.
 ===================================================== */
 @media (max-width: 768px) {
-  .hero {
-    flex-direction: column;   /* text on top, code card below */
-    align-items: stretch;
-    text-align: left;
+  .hero { flex-direction: column; align-items: stretch; }
+  .about-content, .contact-layout { flex-direction: column; }
+
+  .site-header { flex-wrap: wrap; }
+  .hamburger { display: flex; }
+
+  /* Visually hidden but still keyboard-focusable */
+  .nav-toggle {
+    display: block;
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
   }
 
-  .site-header {
+  .main-nav {
+    flex-basis: 100%;      /* nav drops onto its own row under logo + icon */
     flex-direction: column;
     align-items: flex-start;
-    gap: 0.75rem;
+    gap: 1rem;
+    max-height: 0;          /* collapsed by default */
+    opacity: 0;
+    overflow: hidden;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 0 1.25rem;
+    margin-top: 0;
+    transition: max-height 0.25s ease, opacity 0.2s ease,
+                padding 0.25s ease, margin-top 0.25s ease;
   }
+  .nav-toggle:checked ~ .main-nav {
+    max-height: 20rem;
+    opacity: 1;
+    padding: 1rem 1.25rem;
+    margin-top: 0.75rem;
+  }
+
+  .footer-top { padding-bottom: 1.5rem; }
+}
+
+/* =====================================================
+   15. RESPONSIVE: SMALL PHONES (≤480px)
+===================================================== */
+@media (max-width: 480px) {
+  .code-card-body { font-size: 0.78rem; padding: 1.1rem; }
+  .hero { padding-top: 1.5rem; padding-bottom: 3rem; gap: 2rem; }
+  .panel { padding: 1.75rem; }
+  .footer-bottom { flex-direction: column; align-items: flex-start; }
 }
