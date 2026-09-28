@@ -2,7 +2,7 @@
 
 A multi-page personal portfolio built with plain **HTML and CSS**. No JavaScript, no frameworks.
 
-**Live site:** https://faryal-intern.netlify.app
+**Live site:** https://intern-faryal.netlify.app
 **Repository:** https://github.com/faryalrashdi865-crypto/portfolio-for-Tech-SG-internship
 
 ## Pages
